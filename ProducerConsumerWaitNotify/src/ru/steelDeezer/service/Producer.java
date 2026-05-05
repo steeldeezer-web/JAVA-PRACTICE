@@ -1,6 +1,7 @@
+package ru.steelDeezer.service;
+
 import ru.steelDeezer.model.Message;
 
-import java.sql.SQLOutput;
 import java.util.Queue;
 
 public class Producer implements Runnable {
@@ -37,7 +38,7 @@ public class Producer implements Runnable {
                     buffer.add(new Message("POISON_PILL"));
                 }
                 buffer.notifyAll();
-                System.out.println("Producer finished");
+                System.out.println("ru.steelDeezer.service.Producer finished");
             }
         }catch (InterruptedException e) {
             Thread.currentThread().interrupt();
