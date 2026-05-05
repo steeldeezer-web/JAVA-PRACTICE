@@ -1,5 +1,6 @@
 import ru.steelDeezer.model.Message;
 
+import java.sql.SQLOutput;
 import java.util.Queue;
 
 public class Producer implements Runnable {
@@ -31,6 +32,15 @@ public class Producer implements Runnable {
                 }
                 Thread.sleep(100);
             }
+            synchronized (buffer){
+                for (int j = 0; j < consumerCount; j++) {
+                    buffer.add(new Message("POISON_PILL"));
+                }
+                buffer.notifyAll();
+                System.out.println("Producer finished");
+            }
+        }catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 
